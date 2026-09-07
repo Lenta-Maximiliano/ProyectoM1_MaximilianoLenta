@@ -1,40 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generador de paletas interactivo</title>
-  <link rel="stylesheet" href="./css/styles.css">
-</head>
-<body>
-  <header>
-    <h1>Generador de paletas de colores</h1>
-    <p>Creá una paleta aleatoria de forma rápida y sencilla.</p>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de paletas interactivo</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header-title">Generador de paletas de colores</h1>
+      <p class="header-description">
+        Creá una paleta aleatoria de forma rápida y sencilla.
+      </p>
+    </header>
 
-  <main>
-    <section>
-      <h2>Configuración de la paleta</h2>
-      <label for="cantidad-colores">Cantidad de colores:</label>
-      <select name="cantidad-colores" id="cantidad-colores">
-        <option value="6">6</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-      </select>
+    <main class="main">
+      <section class="section">
+        <h2 class="section-title">Configuración de la paleta</h2>
 
-      <button type="button">Generar paleta</button>
-    </section>
+        <div class="configuration-container">
+          <label for="cantidad-colores">Cantidad de colores:</label>
+          <select
+            name="cantidad-colores"
+            id="cantidad-colores"
+            class="color-count-select"
+          >
+            <option class="option-select" value="6">6</option>
+            <option class="option-select" value="8">8</option>
+            <option class="option-select" value="9">9</option>
+          </select>
+        </div>
 
-    <section>
-      <h2>Tu paleta:</h2>
-      <div id="container-paleta"></div>
-      <div id="container-feedback"></div>
-    </section>
-  </main>
+        <button type="button" class="generate-button">Generar paleta</button>
+      </section>
 
-  <footer>
-    <p>Generador de Paletas de Colores · Desarrollado por Maximiliano Lenta · 2026</p>
-  </footer>
-  <script src="./js/script.js"></script>
-</body>
+      <section class="section">
+        <h2 class="section-title">Tu paleta:</h2>
+        <div id="container-paleta">
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+          <div class="color-card"><span class="name-hexa">#FF067C</span></div>
+        </div>
+        <div id="container-feedback"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Generador de Paletas de Colores · Desarrollado por Maximiliano Lenta ·
+        2026
+      </p>
+    </footer>
+    <script src="./js/script.js"></script>
+  </body>
 </html>
