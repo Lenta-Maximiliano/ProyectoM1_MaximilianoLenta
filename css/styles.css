@@ -107,6 +107,7 @@ body {
 }
 
 .name-hexa{
+  text-transform: uppercase;
   border: 1px solid black;
   padding: 0.5rem;
   border-radius: 0.4rem;
