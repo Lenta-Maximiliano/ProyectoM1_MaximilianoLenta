@@ -88,10 +88,8 @@ function generateRandomHex() {
   return colorHex;
 }
 
-generateButton.addEventListener("click", () => {
+function generatePalette(colorCount, colorFormat) {
   paletteContainer.innerHTML = "";
-
-  const colorCount = Number(colorCountSelect.value);
 
   let columns;
 
@@ -102,8 +100,6 @@ generateButton.addEventListener("click", () => {
   } else {
     columns = 3;
   }
-
-  const colorFormat = colorFormatSelect.value;
 
   paletteContainer.style.gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
 
@@ -152,4 +148,14 @@ generateButton.addEventListener("click", () => {
     card.appendChild(colorInfo);
     paletteContainer.appendChild(card);
   }
+
+}
+
+generateButton.addEventListener("click", () => {
+  const colorCount = Number(colorCountSelect.value);
+  const colorFormat = colorFormatSelect.value;
+
+  generatePalette(colorCount, colorFormat);
 });
+
+generatePalette(6, "hsl");
