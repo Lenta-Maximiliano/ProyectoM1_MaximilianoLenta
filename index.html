@@ -29,6 +29,16 @@
             <option class="option-select" value="8">8</option>
             <option class="option-select" value="9">9</option>
           </select>
+          
+          <label for="formato-colores">Formato de colores:</label>
+          <select
+            name="formato-colores"
+            id="formato-colores"
+            class="color-formato-select"
+          >
+            <option class="option-select" value="hsl">HSL</option>
+            <option class="option-select" value="hex">HEX</option>
+          </select>
         </div>
 
         <button type="button" class="generate-button" id="generate-btn">Generar paleta</button>
@@ -36,9 +46,7 @@
 
       <section class="section">
         <h2 class="section-title">Tu paleta:</h2>
-        <div id="container-paleta">
-          <!-- <div class="color-card"><span class="name-hexa">#FF067C</span></div> -->
-        </div>
+        <div id="container-paleta"></div>
         <div id="container-feedback"></div>
       </section>
     </main>

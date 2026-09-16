@@ -1,7 +1,8 @@
-const cantidadColoresSelect = document.getElementById("cantidad-colores");
-const generateBtn = document.getElementById("generate-btn");
-const containerPaleta = document.getElementById("container-paleta");
-const containerFeedback = document.getElementById("container-feedback");
+const colorCountSelect = document.getElementById("cantidad-colores");
+const generateButton = document.getElementById("generate-btn");
+const paletteContainer = document.getElementById("container-paleta");
+const feedbackContainer = document.getElementById("container-feedback");
+const colorFormatSelect = document.getElementById("formato-colores");
 
 function rgbToHex(red, green, blue) {
   const hex1 = red.toString(16).padStart(2, "0");
@@ -60,33 +61,95 @@ function hslToRgb(hue, saturation, lightness) {
   };
 }
 
-generateBtn.addEventListener("click", () => {
-  containerPaleta.innerHTML = "";
+function generateRandomHsl() {
+  const hue = Math.floor(Math.random() * 360);
+  const saturation = Math.floor(Math.random() * 101);
+  const lightness = Math.floor(Math.random() * 101);
 
-  const totalColors = Number(cantidadColoresSelect.value);
+  const colorHSL = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
-  containerPaleta.style.gridTemplateColumns = `repeat(${totalColors}, 1fr)`;
+  return {
+    hue,
+    saturation,
+    lightness,
+    colorHSL,
+  };
+}
 
-  for (let i = 0; i < totalColors; i++) {
+function generateRandomHex() {
+  const characters = "0123456789ABCDEF";
+  let colorHex = "#";
+
+  for (let i = 0; i < 6; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    colorHex += characters[randomIndex];
+  }
+
+  return colorHex;
+}
+
+generateButton.addEventListener("click", () => {
+  paletteContainer.innerHTML = "";
+
+  const colorCount = Number(colorCountSelect.value);
+
+  let columns;
+
+  if (colorCount === 6) {
+    columns = 3;
+  } else if (colorCount === 8) {
+    columns = 4;
+  } else {
+    columns = 3;
+  }
+
+  const colorFormat = colorFormatSelect.value;
+
+  paletteContainer.style.gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
+
+  for (let i = 0; i < colorCount; i++) {
     const card = document.createElement("div");
     card.classList.add("color-card");
 
-    const colorHexElement = document.createElement("span");
-    colorHexElement.classList.add("name-hexa");
+    const colorPreview = document.createElement("div");
+    colorPreview.classList.add("color-preview");
 
-    const hueRandom = Math.floor(Math.random() * 360);
-    const saturationRandom = Math.floor(Math.random() * 101);
-    const lightnessRandom = Math.floor(Math.random() * 101);
+    const colorInfo = document.createElement("div");
+    colorInfo.classList.add("color-info");
 
-    const colorRGB = hslToRgb(hueRandom, saturationRandom, lightnessRandom);
+    const hexElement = document.createElement("span");
+    hexElement.classList.add("name-hex");
 
-    const colorHex = rgbToHex(colorRGB.red, colorRGB.green, colorRGB.blue);
+    const hslElement = document.createElement("span");
+    hslElement.classList.add("name-hsl");
 
-    colorHexElement.textContent = colorHex;
+    const randomColor =
+      colorFormat === "hsl" ? generateRandomHsl() : generateRandomHex();
 
-    card.style.backgroundColor = `hsl(${hueRandom}, ${saturationRandom}%, ${lightnessRandom}%)`;
+    if (colorFormat === "hsl") {
+      const rgbColor = hslToRgb(
+        randomColor.hue,
+        randomColor.saturation,
+        randomColor.lightness,
+      );
+      const hexColor = rgbToHex(rgbColor.red, rgbColor.green, rgbColor.blue);
 
-    card.appendChild(colorHexElement);
-    containerPaleta.appendChild(card);
+      hslElement.textContent = randomColor.colorHSL;
+      colorInfo.appendChild(hslElement);
+
+      hexElement.textContent = hexColor;
+      colorInfo.appendChild(hexElement);
+
+      colorPreview.style.backgroundColor = randomColor.colorHSL;
+    } else {
+      hexElement.textContent = randomColor;
+      colorInfo.appendChild(hexElement);
+
+      colorPreview.style.backgroundColor = randomColor;
+    }
+
+    card.appendChild(colorPreview);
+    card.appendChild(colorInfo);
+    paletteContainer.appendChild(card);
   }
 });
