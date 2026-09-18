@@ -19,29 +19,35 @@
         <h2 class="section-title">Configuración de la paleta</h2>
 
         <div class="configuration-container">
-          <label for="cantidad-colores">Cantidad de colores:</label>
-          <select
-            name="cantidad-colores"
-            id="cantidad-colores"
-            class="color-count-select"
-          >
-            <option class="option-select" value="6">6</option>
-            <option class="option-select" value="8">8</option>
-            <option class="option-select" value="9">9</option>
-          </select>
-          
-          <label for="formato-colores">Formato de colores:</label>
-          <select
-            name="formato-colores"
-            id="formato-colores"
-            class="color-formato-select"
-          >
-            <option class="option-select" value="hsl">HSL</option>
-            <option class="option-select" value="hex">HEX</option>
-          </select>
-        </div>
+          <div class="configuration-option">
+            <label for="cantidad-colores">Cantidad de colores:</label>
+            <select
+              name="cantidad-colores"
+              id="cantidad-colores"
+              class="color-count-select"
+            >
+              <option class="option-select" value="6">6</option>
+              <option class="option-select" value="8">8</option>
+              <option class="option-select" value="9">9</option>
+            </select>
+          </div>
 
-        <button type="button" class="generate-button" id="generate-btn">Generar paleta</button>
+          <div class="configuration-option">
+            <label for="formato-colores">Formato de colores:</label>
+            <select
+              name="formato-colores"
+              id="formato-colores"
+              class="color-formato-select"
+            >
+              <option class="option-select" value="hsl">HSL</option>
+              <option class="option-select" value="hex">HEX</option>
+            </select>
+          </div>
+
+          <button type="button" class="generate-button" id="generate-btn">
+            Generar paleta
+          </button>
+        </div>
       </section>
 
       <section class="section">
