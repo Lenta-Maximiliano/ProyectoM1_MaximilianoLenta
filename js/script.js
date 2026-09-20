@@ -7,7 +7,9 @@ const saveButton = document.getElementById("save-btn");
 const savedPalettesButton = document.getElementById("saved-palettes-btn");
 const savedPalettesModal = document.getElementById("saved-palettes-modal");
 const closeModalButton = document.getElementById("close-modal-btn");
-const savedPalettesContainer = document.getElementById("container-paletas-guardadas");
+const savedPalettesContainer = document.getElementById(
+  "container-paletas-guardadas",
+);
 const confirmationModal = document.getElementById("confirmation-modal");
 const cancelDeleteButton = document.getElementById("cancel-delete-btn");
 const confirmDeleteButton = document.getElementById("confirm-delete-btn");
@@ -227,6 +229,14 @@ function renderPalette(palette, colorFormat) {
     hslElement.classList.add("name-hsl");
     hslElement.textContent = color.hsl;
 
+    hslElement.addEventListener("click", () => {
+      copyColorCode(color.hsl);
+    });
+
+    hexElement.addEventListener("click", () => {
+      copyColorCode(color.hex);
+    });
+
     if (colorFormat === "hsl") {
       colorPreview.style.backgroundColor = color.hsl;
       colorInfo.appendChild(hslElement);
@@ -353,6 +363,16 @@ function closeConfirmationModal() {
 
 function closeSavedPalettesModal() {
   savedPalettesModal.classList.remove("is-visible");
+}
+
+async function copyColorCode(colorCode) {
+  try {
+    await navigator.clipboard.writeText(colorCode);
+
+    showFeedback("Código del color copiado correctamente");
+  } catch (error) {
+    showFeedback("No se pudo copiar el código del color");
+  }
 }
 
 generateButton.addEventListener("click", () => {

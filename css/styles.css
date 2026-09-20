@@ -259,12 +259,10 @@ body {
   background-color: var(--color-surface);
 }
 
-.name-hex,
+/* .name-hex,
 .name-hsl {
   display: block;
-
   padding: 0.5rem;
-
   font-size: 0.85rem;
   border: 1px solid var(--color-border);
   border-radius: 7px;
@@ -279,6 +277,54 @@ body {
   cursor: pointer;
   background-color: var(--color-hover);
   border-color: var(--color-primary);
+} */
+
+.name-hex,
+.name-hsl {
+  position: relative;
+  display: block;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+}
+
+.name-hex {
+  text-transform: uppercase;
+}
+
+.name-hex:hover,
+.name-hsl:hover {
+  cursor: pointer;
+  background-color: var(--color-hover);
+  border-color: var(--color-primary);
+}
+
+.name-hex::after,
+.name-hsl::after {
+  content: "Copiar color";
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.4rem 0.7rem;
+  color: white;
+  background-color: var(--color-text);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: normal;
+  text-transform: none;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.name-hex:hover::after,
+.name-hsl:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* =========================
