@@ -82,7 +82,8 @@ body {
   padding: 2rem 1.5rem;
 }
 
-.section {
+.section-palettes,
+.section-main {
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -103,7 +104,7 @@ body {
   flex-wrap: wrap;
   gap: 1.5rem;
 
-  max-width: 850px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 1.5rem;
 
@@ -187,6 +188,36 @@ body {
 }
 
 /* =========================
+   Botones secundarios
+========================= */
+
+.save-button,
+.saved-palettes-button {
+  width: 180px;
+  padding: 0.65rem 1rem;
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.save-button:hover,
+.saved-palettes-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--color-primary);
+}
+
+.save-button:focus-visible,
+.saved-palettes-button:focus-visible {
+  outline: 3px solid rgba(99, 91, 255, 0.3);
+  outline-offset: 3px;
+}
+
+/* =========================
    Contenedor de la paleta
 ========================= */
 
@@ -251,6 +282,234 @@ body {
 }
 
 /* =========================
+   Modal de paletas guardadas
+========================= */
+
+.saved-palettes-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.is-visible {
+  display: flex;
+}
+
+.saved-palettes-content {
+  width: 100%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.saved-palettes-header {
+  min-width: 245px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.saved-palettes-header .section-title {
+  margin-bottom: 0;
+}
+
+.close-modal-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--color-text);
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.close-modal-button:hover {
+  cursor: pointer;
+  background-color: var(--color-hover);
+}
+
+.close-modal-button:focus-visible {
+  outline: 3px solid rgba(99, 91, 255, 0.3);
+  outline-offset: 2px;
+}
+
+.saved-palette {
+  min-width: 245px;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.saved-palette:last-child {
+  margin-bottom: 0;
+}
+
+.saved-palette-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.saved-palette-title {
+  font-weight: bold;
+}
+
+.delete-palette-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: var(--color-text-light);
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.delete-palette-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #d64545;
+}
+
+.delete-palette-button:focus-visible {
+  outline: 3px solid rgba(99, 91, 255, 0.3);
+  outline-offset: 2px;
+}
+
+.saved-palette-colors {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.saved-color-preview {
+  min-height: 70px;
+}
+
+/* ====================================
+  Modal confirmación eliminar paleta
+==================================== */
+
+.confirmation-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.confirmation-content {
+  width: 100%;
+  max-width: 450px;
+  padding: 1.5rem;
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.confirmation-content .section-title {
+  margin-bottom: 0.8rem;
+}
+
+.confirmation-message {
+  margin-bottom: 1.5rem;
+  color: var(--color-text-light);
+}
+
+.confirmation-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cancel-button,
+.confirm-delete-button {
+  min-width: 120px;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.cancel-button {
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+}
+
+.cancel-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--color-primary);
+}
+
+.confirm-delete-button {
+  color: white;
+  background-color: #d64545;
+  border: 1px solid #d64545;
+}
+
+.confirm-delete-button:hover {
+  cursor: pointer;
+  background-color: #b83232;
+}
+
+.cancel-button:focus-visible,
+.confirm-delete-button:focus-visible {
+  outline: 3px solid rgba(99, 91, 255, 0.3);
+  outline-offset: 3px;
+}
+
+.confirmation-modal.is-visible {
+  display: flex;
+}
+
+/* ==========================================
+  Feedback paleta guardada correctamente
+========================================== */
+
+#container-feedback {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+}
+
+.feedback-message {
+  padding: 0.8rem 1.2rem;
+  color: white;
+  background-color: #2e7d32;
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+/* =========================
    Pie de página
 ========================= */
 
@@ -299,8 +558,14 @@ body {
   }
 
   .color-count-select,
-  .color-formato-select,
-  .generate-button {
+  .color-formato-select {
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  .generate-button,
+  .save-button,
+  .saved-palettes-button {
     width: 100%;
   }
 }

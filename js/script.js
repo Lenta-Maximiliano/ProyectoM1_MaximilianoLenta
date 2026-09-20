@@ -3,8 +3,17 @@ const generateButton = document.getElementById("generate-btn");
 const paletteContainer = document.getElementById("container-paleta");
 const feedbackContainer = document.getElementById("container-feedback");
 const colorFormatSelect = document.getElementById("formato-colores");
+const saveButton = document.getElementById("save-btn");
+const savedPalettesButton = document.getElementById("saved-palettes-btn");
+const savedPalettesModal = document.getElementById("saved-palettes-modal");
+const closeModalButton = document.getElementById("close-modal-btn");
+const savedPalettesContainer = document.getElementById("container-paletas-guardadas");
+const confirmationModal = document.getElementById("confirmation-modal");
+const cancelDeleteButton = document.getElementById("cancel-delete-btn");
+const confirmDeleteButton = document.getElementById("confirm-delete-btn");
 
 let currentPalette = [];
+let paletteToDelete = null;
 
 function rgbToHex(red, green, blue) {
   const hex1 = red.toString(16).padStart(2, "0");
@@ -92,9 +101,7 @@ function rgbToHsl(red, green, blue) {
 
   if (delta !== 0) {
     saturation =
-      lightness > 0.5
-        ? delta / (2 - max - min)
-        : delta / (max + min);
+      lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
 
     if (max === redDecimal) {
       hue = ((greenDecimal - blueDecimal) / delta) % 6;
@@ -160,11 +167,7 @@ function generatePalette(colorCount, colorFormat) {
         randomHsl.lightness,
       );
 
-      const hexColor = rgbToHex(
-        rgbColor.red,
-        rgbColor.green,
-        rgbColor.blue,
-      );
+      const hexColor = rgbToHex(rgbColor.red, rgbColor.green, rgbColor.blue);
 
       color = {
         hsl: randomHsl.colorHSL,
@@ -175,11 +178,7 @@ function generatePalette(colorCount, colorFormat) {
 
       const rgbColor = hexToRgb(hexColor);
 
-      const hslColor = rgbToHsl(
-        rgbColor.red,
-        rgbColor.green,
-        rgbColor.blue,
-      );
+      const hslColor = rgbToHsl(rgbColor.red, rgbColor.green, rgbColor.blue);
 
       const colorHSL = `hsl(${hslColor.hue}, ${hslColor.saturation}%, ${hslColor.lightness}%)`;
 
@@ -242,6 +241,120 @@ function renderPalette(palette, colorFormat) {
   });
 }
 
+function savePalette() {
+  const savedPalettes = JSON.parse(
+    localStorage.getItem("savedPalettes") || "[]",
+  );
+
+  savedPalettes.push(currentPalette);
+
+  localStorage.setItem("savedPalettes", JSON.stringify(savedPalettes));
+}
+
+function showFeedback(message) {
+  feedbackContainer.innerHTML = "";
+
+  const feedbackMessage = document.createElement("div");
+  feedbackMessage.classList.add("feedback-message");
+  feedbackMessage.textContent = `✓ ${message}`;
+
+  feedbackContainer.appendChild(feedbackMessage);
+
+  setTimeout(() => {
+    feedbackContainer.innerHTML = "";
+  }, 3000);
+}
+
+function getSavedPalettes() {
+  return JSON.parse(localStorage.getItem("savedPalettes") || "[]");
+}
+
+function openSavedPalettesModal() {
+  savedPalettesModal.classList.add("is-visible");
+}
+
+function renderSavedPalettes(savedPalettes) {
+  savedPalettesContainer.innerHTML = "";
+
+  if (savedPalettes.length === 0) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.textContent = "No hay paletas guardadas.";
+
+    savedPalettesContainer.appendChild(emptyMessage);
+
+    return;
+  }
+
+  savedPalettes.forEach((palette, index) => {
+    const savedPalette = document.createElement("div");
+    savedPalette.classList.add("saved-palette");
+
+    const savedPaletteHeader = document.createElement("div");
+    savedPaletteHeader.classList.add("saved-palette-header");
+
+    const savedPaletteTitle = document.createElement("span");
+    savedPaletteTitle.classList.add("saved-palette-title");
+    savedPaletteTitle.textContent = `Paleta ${index + 1}`;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.classList.add("delete-palette-button");
+    deleteButton.setAttribute("aria-label", `Eliminar paleta ${index + 1}`);
+    deleteButton.textContent = "Eliminar Paleta";
+
+    deleteButton.addEventListener("click", () => {
+      openConfirmationModal(index);
+    });
+
+    savedPaletteHeader.appendChild(savedPaletteTitle);
+    savedPaletteHeader.appendChild(deleteButton);
+
+    const savedPaletteColors = document.createElement("div");
+    savedPaletteColors.classList.add("saved-palette-colors");
+
+    savedPaletteColors.style.gridTemplateColumns = `repeat(${palette.length}, minmax(0, 1fr))`;
+
+    palette.forEach((color) => {
+      const colorPreview = document.createElement("div");
+      colorPreview.classList.add("saved-color-preview");
+      colorPreview.style.backgroundColor = color.hex;
+
+      savedPaletteColors.appendChild(colorPreview);
+    });
+
+    savedPalette.appendChild(savedPaletteHeader);
+    savedPalette.appendChild(savedPaletteColors);
+
+    savedPalettesContainer.appendChild(savedPalette);
+  });
+}
+
+function deleteSavedPalette(index) {
+  const savedPalettes = getSavedPalettes();
+
+  savedPalettes.splice(index, 1);
+
+  localStorage.setItem("savedPalettes", JSON.stringify(savedPalettes));
+
+  renderSavedPalettes(savedPalettes);
+}
+
+function openConfirmationModal(index) {
+  paletteToDelete = index;
+
+  confirmationModal.classList.add("is-visible");
+}
+
+function closeConfirmationModal() {
+  confirmationModal.classList.remove("is-visible");
+
+  paletteToDelete = null;
+}
+
+function closeSavedPalettesModal() {
+  savedPalettesModal.classList.remove("is-visible");
+}
+
 generateButton.addEventListener("click", () => {
   const colorCount = Number(colorCountSelect.value);
   const colorFormat = colorFormatSelect.value;
@@ -251,6 +364,36 @@ generateButton.addEventListener("click", () => {
 
 colorFormatSelect.addEventListener("change", () => {
   renderPalette(currentPalette, colorFormatSelect.value);
+});
+
+saveButton.addEventListener("click", () => {
+  savePalette();
+
+  showFeedback("Paleta guardada correctamente");
+});
+
+savedPalettesButton.addEventListener("click", () => {
+  const savedPalettes = getSavedPalettes();
+
+  renderSavedPalettes(savedPalettes);
+  openSavedPalettesModal();
+});
+
+closeModalButton.addEventListener("click", () => {
+  closeSavedPalettesModal();
+});
+
+cancelDeleteButton.addEventListener("click", () => {
+  closeConfirmationModal();
+});
+
+confirmDeleteButton.addEventListener("click", () => {
+  if (paletteToDelete === null) {
+    return;
+  }
+
+  deleteSavedPalette(paletteToDelete);
+  closeConfirmationModal();
 });
 
 generatePalette(6, "hsl");

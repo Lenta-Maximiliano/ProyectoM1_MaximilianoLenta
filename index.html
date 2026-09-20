@@ -15,7 +15,7 @@
     </header>
 
     <main class="main">
-      <section class="section">
+      <section class="section-main">
         <h2 class="section-title">Configuración de la paleta</h2>
 
         <div class="configuration-container">
@@ -44,22 +44,77 @@
             </select>
           </div>
 
-          <button 
-            type="button" 
-            class="generate-button" 
+          <button
+            type="button"
+            class="generate-button"
             id="generate-btn"
             aria-label="Generar una nueva paleta de colores"
-            >
+          >
             Generar paleta
+          </button>
+
+          <button type="button" class="save-button" id="save-btn">
+            Guardar paleta
+          </button>
+
+          <button
+            type="button"
+            class="saved-palettes-button"
+            id="saved-palettes-btn"
+          >
+            Paletas guardadas
           </button>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section-palettes">
         <h2 class="section-title">Tu paleta:</h2>
         <div id="container-paleta"></div>
         <div id="container-feedback"></div>
       </section>
+
+      <div class="saved-palettes-modal" id="saved-palettes-modal">
+        <div class="saved-palettes-content">
+          <div class="saved-palettes-header">
+            <h2 class="section-title">Paletas guardadas</h2>
+
+            <button
+              type="button"
+              class="close-modal-button"
+              id="close-modal-btn"
+              aria-label="Cerrar paletas guardadas"
+            >
+              ×
+            </button>
+          </div>
+
+          <div id="container-paletas-guardadas"></div>
+        </div>
+      </div>
+
+      <div class="confirmation-modal" id="confirmation-modal">
+        <div class="confirmation-content">
+          <h2 class="section-title">Eliminar paleta</h2>
+
+          <p class="confirmation-message">
+            ¿Estás seguro de que deseas eliminar esta paleta?
+          </p>
+
+          <div class="confirmation-actions">
+            <button type="button" class="cancel-button" id="cancel-delete-btn">
+              Cancelar
+            </button>
+
+            <button
+              type="button"
+              class="confirm-delete-button"
+              id="confirm-delete-btn"
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="footer">
