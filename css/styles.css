@@ -306,6 +306,17 @@ body {
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
+.name-hex.is-copied::after,
+.name-hsl.is-copied::after {
+  content: "✓ Color copiado";
+}
+
+.name-hex.is-hidden::after,
+.name-hsl.is-hidden::after {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .name-hex:hover::after,
 .name-hsl:hover::after {
   opacity: 1;

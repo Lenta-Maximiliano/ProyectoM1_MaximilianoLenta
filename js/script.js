@@ -257,11 +257,29 @@ function renderPalette(palette, colorFormat) {
     });
 
     hslElement.addEventListener("click", () => {
-      copyColorCode(color.hsl);
+      copyColorCode(color.hsl, hslElement);
     });
 
     hexElement.addEventListener("click", () => {
-      copyColorCode(color.hex);
+      copyColorCode(color.hex, hexElement);
+    });
+
+    hslElement.addEventListener("mouseenter", () => {
+      hslElement.classList.remove("is-hidden");
+    });
+
+    hslElement.addEventListener("mouseleave", () => {
+      hslElement.classList.remove("is-copied");
+      hslElement.classList.remove("is-hidden");
+    });
+
+    hexElement.addEventListener("mouseenter", () => {
+      hexElement.classList.remove("is-hidden");
+    });
+
+    hexElement.addEventListener("mouseleave", () => {
+      hexElement.classList.remove("is-copied");
+      hexElement.classList.remove("is-hidden");
     });
 
     if (colorFormat === "hsl") {
@@ -393,11 +411,17 @@ function closeSavedPalettesModal() {
   savedPalettesModal.classList.remove("is-visible");
 }
 
-async function copyColorCode(colorCode) {
+async function copyColorCode(colorCode, colorElement) {
   try {
     await navigator.clipboard.writeText(colorCode);
 
-    showFeedback("Código del color copiado correctamente");
+    colorElement.classList.remove("is-hidden");
+    colorElement.classList.add("is-copied");
+
+    setTimeout(() => {
+      colorElement.classList.remove("is-copied");
+      colorElement.classList.add("is-hidden");
+    }, 2000);
   } catch (error) {
     showFeedback("No se pudo copiar el código del color");
   }
