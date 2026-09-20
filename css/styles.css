@@ -63,6 +63,16 @@ body {
   line-height: 1.2;
 }
 
+.brand-name {
+  font-size: 1.15em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(90deg, #635bff, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .header-description {
   max-width: 650px;
   margin: 1rem auto 0;
@@ -605,6 +615,28 @@ body {
 
   font-size: 0.85rem;
   text-align: center;
+}
+
+.footer-contact {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.footer-contact a {
+  color: var(--color-primary);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
+.footer-contact a:focus-visible {
+  outline: 3px solid rgba(99, 91, 255, 0.3);
+  outline-offset: 3px;
 }
 
 /* =========================
