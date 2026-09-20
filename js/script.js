@@ -155,9 +155,15 @@ function generateRandomHex() {
 }
 
 function generatePalette(colorCount, colorFormat) {
+  const previousPalette = currentPalette;
+  const lockedColors = previousPalette.filter((color) => color.locked);
+
   currentPalette = [];
 
-  for (let i = 0; i < colorCount; i++) {
+  const colorsToKeep = lockedColors.slice(0, colorCount);
+  currentPalette.push(...colorsToKeep);
+
+  for (let i = colorsToKeep.length; i < colorCount; i++) {
     let color;
 
     if (colorFormat === "hsl") {
@@ -174,6 +180,7 @@ function generatePalette(colorCount, colorFormat) {
       color = {
         hsl: randomHsl.colorHSL,
         hex: hexColor,
+        locked: false,
       };
     } else {
       const hexColor = generateRandomHex();
@@ -187,6 +194,7 @@ function generatePalette(colorCount, colorFormat) {
       color = {
         hsl: colorHSL,
         hex: hexColor,
+        locked: false,
       };
     }
 
@@ -215,6 +223,10 @@ function renderPalette(palette, colorFormat) {
     const card = document.createElement("div");
     card.classList.add("color-card");
 
+    if (color.locked) {
+      card.classList.add("is-locked");
+    }
+
     const colorPreview = document.createElement("div");
     colorPreview.classList.add("color-preview");
 
@@ -228,6 +240,21 @@ function renderPalette(palette, colorFormat) {
     const hslElement = document.createElement("span");
     hslElement.classList.add("name-hsl");
     hslElement.textContent = color.hsl;
+
+    const lockButton = document.createElement("button");
+    lockButton.type = "button";
+    lockButton.classList.add("lock-button");
+    lockButton.classList.add(color.locked ? "is-locked" : "is-unlocked");
+    lockButton.textContent = color.locked ? "🔒 Desbloquear" : "🔒 Bloquear";
+    lockButton.setAttribute(
+      "aria-label",
+      color.locked ? "Desbloquear color" : "Bloquear color",
+    );
+
+    lockButton.addEventListener("click", () => {
+      color.locked = !color.locked;
+      renderPalette(currentPalette, colorFormatSelect.value);
+    });
 
     hslElement.addEventListener("click", () => {
       copyColorCode(color.hsl);
@@ -245,6 +272,7 @@ function renderPalette(palette, colorFormat) {
       colorInfo.appendChild(hexElement);
     }
 
+    colorInfo.appendChild(lockButton);
     card.appendChild(colorPreview);
     card.appendChild(colorInfo);
     paletteContainer.appendChild(card);
