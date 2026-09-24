@@ -233,11 +233,11 @@ function renderPalette(palette, colorFormat) {
     const colorInfo = document.createElement("div");
     colorInfo.classList.add("color-info");
 
-    const hexElement = document.createElement("span");
+    const hexElement = document.createElement("button");
     hexElement.classList.add("name-hex");
     hexElement.textContent = color.hex;
 
-    const hslElement = document.createElement("span");
+    const hslElement = document.createElement("button");
     hslElement.classList.add("name-hsl");
     hslElement.textContent = color.hsl;
 
@@ -245,7 +245,7 @@ function renderPalette(palette, colorFormat) {
     lockButton.type = "button";
     lockButton.classList.add("lock-button");
     lockButton.classList.add(color.locked ? "is-locked" : "is-unlocked");
-    lockButton.textContent = color.locked ? "🔒 Desbloquear" : "🔒 Bloquear";
+    lockButton.textContent = color.locked ? "🔒 Desbloquear Color" : "🔒 Bloquear Color";
     lockButton.setAttribute(
       "aria-label",
       color.locked ? "Desbloquear color" : "Bloquear color",
@@ -355,7 +355,6 @@ function renderSavedPalettes(savedPalettes) {
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
     deleteButton.classList.add("delete-palette-button");
-    deleteButton.setAttribute("aria-label", `Eliminar paleta ${index + 1}`);
     deleteButton.textContent = "Eliminar Paleta";
 
     deleteButton.addEventListener("click", () => {

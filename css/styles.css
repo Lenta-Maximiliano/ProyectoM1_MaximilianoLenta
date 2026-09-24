@@ -3,17 +3,17 @@
 ========================= */
 
 :root {
-  --color-background: #f4f5f9;
-  --color-surface: #ffffff;
-  --color-primary: #635bff;
-  --color-primary-dark: #5048d8;
-  --color-text: #252538;
-  --color-text-light: #68687a;
-  --color-border: #e1e3ec;
-  --color-hover: #f0efff;
+  --color-background: hsl(228, 29%, 97%);
+  --color-surface: hsl(0, 0%, 100%);
+  --color-primary: hsl(243, 100%, 68%);
+  --color-primary-dark: hsl(243, 65%, 56%);
+  --color-text: hsl(240, 20%, 18%);
+  --color-text-light: hsl(240, 8%, 44%);
+  --color-border: hsl(229, 22%, 90%);
+  --color-hover: hsl(244, 100%, 97%);
 
   --border-radius: 12px;
-  --shadow-soft: 0 4px 14px rgba(35, 35, 70, 0.4);
+  --shadow-medium: 0 4px 14px rgba(35, 35, 70, 0.4);
 }
 
 /* =========================
@@ -121,7 +121,7 @@ body {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-medium);
 }
 
 .configuration-option {
@@ -252,7 +252,7 @@ body {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-medium);
 }
 
 .color-card.is-locked {
@@ -276,6 +276,7 @@ body {
 
 .name-hex,
 .name-hsl {
+  background-color: var(--color-surface);
   position: relative;
   display: block;
   padding: 0.5rem;
@@ -400,7 +401,7 @@ body {
   padding: 1.5rem;
   background-color: var(--color-surface);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-medium);
 }
 
 .saved-palettes-header {
@@ -519,7 +520,7 @@ body {
   padding: 1.5rem;
   background-color: var(--color-surface);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-medium);
   text-align: center;
 }
 
@@ -596,7 +597,7 @@ body {
   color: white;
   background-color: #2e7d32;
   border-radius: 8px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-medium);
   font-size: 0.95rem;
   font-weight: bold;
 }
